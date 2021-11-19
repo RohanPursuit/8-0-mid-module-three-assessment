@@ -1,4 +1,29 @@
-.products {
+.App {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+}
+
+.products h1 {
+	grid-column: span 3;
+}
+
+.Cart,
+.checkout {
+	grid-column: 3/4;
+}
+
+.checkout {
+	display: block;
+}
+
+.products {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-column: span 2;
+	margin-left: 40px;
+}
+
+.products div {
+	grid-column: span 1;
+	/* padding-right: 40px; */
 }

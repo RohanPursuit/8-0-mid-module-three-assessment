@@ -17,9 +17,9 @@ class App extends React.Component {
     }
   }
 
-  addToCart = (id, name, price, img, description) => {
+  addToCart = (name, price) => {
     const format = 'XXXXXXX'
-    const uuid = format.split('').map(el => Math.floor(Math.random()* 10)).join('')
+    const uuid = format.split('').map(() => Math.floor(Math.random()* 10)).join('')
     const {cart, total} = this.state
     this.setState({cart: [...cart, <li key={uuid}>{name + ':'} {formatPrice(price)}</li>], total: [...total, price]})
   }
@@ -36,36 +36,29 @@ class App extends React.Component {
       />
       )
 
-      const subTotal = this.state.total.reduce((a,b) => {
-        if(a[0] ==="$"){
-          a = Number(a.slice(1))
-        }
-        if(b[0] ==="$"){
-          b = Number(b.slice(1))
-        }
-        return a + b
-        
-      }) || 0
+      const subTotal = this.state.total.reduce((a,b) => a + b) || 0
 
       const tax = subTotal*0.05
       const total = subTotal + tax
 
     return (
       <div className="App">
-        <h1>My Garage Sale</h1>
         <section className="products">
+        <h1>My Garage Sale</h1>
           {displayProducts}
         </section>
         <section className="Cart">
-          Cart
+          <h2>Cart</h2>
           {this.state.cart}
-          <p>Subtotal: {formatPrice(Number(subTotal))}</p>
-          <p>Tax: {formatPrice(subTotal*0.05)}</p>
-          <p>Total: {formatPrice(total)}</p>
-        </section>
+          <h3>
+            <p>Subtotal: {formatPrice(Number(subTotal))}</p>
+            <p>Tax: {formatPrice(subTotal*0.05)}</p>
+            <p>Total: {formatPrice(total)}</p>
+            </h3>
         <section className="checkout">
-          Checkout
+          <h2>Checkout</h2>
           <Form total={total}/>
+        </section>
         </section>
       </div>
     )
