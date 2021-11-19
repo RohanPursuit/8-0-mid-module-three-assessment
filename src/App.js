@@ -56,12 +56,14 @@ class App extends React.Component {
           {displayProducts}
         </section>
         <section className="Cart">
+          Cart
           {this.state.cart}
-          <p>SubTotal: {formatPrice(Number(subTotal))}</p>
+          <p>Subtotal: {formatPrice(Number(subTotal))}</p>
           <p>Tax: {formatPrice(subTotal*0.05)}</p>
           <p>Total: {formatPrice(total)}</p>
         </section>
-        <section className="form">
+        <section className="checkout">
+          Checkout
           <Form total={total}/>
         </section>
       </div>
