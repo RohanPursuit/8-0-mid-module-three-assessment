@@ -17,10 +17,13 @@ class App extends React.Component {
     }
   }
 
-  addToCart = (event) => {
+  addToCart = (id, name, price, img, description) => {
+    const format = 'XXXXXXX'
+    const uuid = format.split('').map(el => Math.floor(Math.random()* 10)).join('')
+    // console.log(uuid) 
+    // console.log(name)
     const {cart, total} = this.state
-    const {value, name} = event.target
-    this.setState({cart: [...cart, <li key={value}>{name + ':'} {value}</li>], total: [...total, value]})
+    this.setState({cart: [...cart, <li key={uuid}>{name + ':'} {formatPrice(price)}</li>], total: [...total, price]})
   }
 
   render(){

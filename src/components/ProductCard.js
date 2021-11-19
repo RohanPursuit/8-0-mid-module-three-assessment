@@ -11,11 +11,8 @@ export default class ProductCard extends React.Component {
             <p> Price: {formatted} </p>
             <img src={img} alt="" />
             <button 
-            onClick={addToCart} 
-            type='submit' 
-            name={name}
-            value={formatted}
-            key={id} 
+            onClick={()=> addToCart(id, name, price, img, description)} 
+            type='submit'
             >
                 Add To Cart
             </button>
