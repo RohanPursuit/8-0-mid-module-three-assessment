@@ -20,7 +20,7 @@ class App extends React.Component {
   addToCart = (event) => {
     const {cart, total} = this.state
     const {value, name} = event.target
-    this.setState({cart: [...cart, <li key={value}>{name} {value}</li>], total: [...total, value]})
+    this.setState({cart: [...cart, <li key={value}>{name + ':'} {value}</li>], total: [...total, value]})
   }
 
   render(){
