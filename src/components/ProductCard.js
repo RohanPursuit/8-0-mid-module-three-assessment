@@ -1,8 +1,26 @@
 import formatPrice from '../helpers/formatPrice'
-import products from '../data/productData'
+import React from 'react'
 
-const getProducts = () => {
-    return products.map(({id, name, price, description, img}) => <div key={id}><h2>{name}</h2><p>Price: {formatPrice(price)}</p><img src={img} alt="" /><button type="submit">Add To Card </button><p>{description}</p></div>)
-}
-
-export default getProducts
+export default class ProductCard extends React.Component {
+    render(){
+        const {id, name, price, img, description, addToCart} = this.props
+        const formatted = formatPrice(price)
+        return(
+            <div>
+            <h2>{name} </h2>
+            <p> Price: {formatted} </p>
+            <img src={img} alt="" />
+            <button 
+            onClick={addToCart} 
+            type='submit' 
+            name={name}
+            value={formatted}
+            key={id} 
+            >
+                Add To Cart
+            </button>
+            <p>{description}</p>
+            </div>
+            )
+        }
+    }

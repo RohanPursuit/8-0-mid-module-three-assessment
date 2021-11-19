@@ -1,40 +1,68 @@
 import "./App.css";
 import React from 'react'
 import data from './data/productData'
+import ProductCard from './components/ProductCard'
 import formatPrice from './helpers/formatPrice'
+import Form from './components/Form'
 
 class App extends React.Component {
   constructor(){
     super()
     this.state = {
       products: data,
-      selectedProduct: ''
+      displayProducts: [],
+      selectedProduct: '',
+      cart: [],
+      total: [0]
     }
   }
 
   addToCart = (event) => {
-    console.log(event.target)
-    this.setState({selectedProduct: event.target})
+    const {cart, total} = this.state
+    const {value, name} = event.target
+    this.setState({cart: [...cart, <li key={value}>{name} {value}</li>], total: [...total, value]})
   }
 
   render(){
-    const displayProducts = () => {
-      return this.state.products.map(({id, name, price, description, img})=> 
-      <form>
-        <h2>{name} </h2>
-        <p> Price: {formatPrice(price)} </p>
-        <img src={img} alt="" />
-        <button type='submit'>Add To Cart</button>
-        <p>{description}</p>
-      </form>)
-    }
+    const displayProducts = this.state.products.map(({id, name, price, description, img})=> 
+      <ProductCard key={id}
+      addToCart={this.addToCart}
+      id={id}
+      name={name}
+      price={price}
+      img={img}
+      description={description}
+      />
+      )
+
+      const subTotal = this.state.total.reduce((a,b) => {
+        if(a[0] ==="$"){
+          a = Number(a.slice(1))
+        }
+        if(b[0] ==="$"){
+          b = Number(b.slice(1))
+        }
+        return a + b
+        
+      }) || 0
+
+      const tax = subTotal*0.05
+      const total = subTotal + tax
+
     return (
       <div className="App">
         <h1>My Garage Sale</h1>
         <section className="products">
-          {displayProducts()}
+          {displayProducts}
         </section>
         <section className="Cart">
+          {this.state.cart}
+          <p>SubTotal: {formatPrice(Number(subTotal))}</p>
+          <p>Tax: {formatPrice(subTotal*0.05)}</p>
+          <p>Total: {formatPrice(total)}</p>
+        </section>
+        <section className="form">
+          <Form total={total}/>
         </section>
       </div>
     )
